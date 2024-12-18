@@ -1,0 +1,6 @@
+user : cruduser
+pass : cruduser
+
+Database : CRUD
+
+connection string : mongodb+srv://cruduser:<db_password>@cluster0.44xkx.mongodb.net/
