@@ -3,4 +3,10 @@ pass : cruduser
 
 Database : CRUD
 
-connection string : mongodb+srv://cruduser:<db_password>@cluster0.44xkx.mongodb.net/
+connection string : mongodb+srv://cruduser:cruduser@cluster0.44xkx.mongodb.net
+
+
+
+another connection string to connect with application :
+
+mongodb+srv://<db_user>:<db_password>@cluster0.44xkx.mongodb.net
