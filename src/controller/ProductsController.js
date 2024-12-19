@@ -127,20 +127,26 @@ const UpdateProducts = async (req, res) => {
 
 
 // D = Delete
-const DeleteProducts = (req, res) => {
-    let id = req.params.id;
+const DeleteProducts = async (req, res) => {
+    try {
+        let id = req.params.id;
 
-    // Use findByIdAndDelete for clarity and better handling
-    ProductsModel.findByIdAndDelete(id, (err, data) => {
-        if (err) {
-            res.status(400).json({ status: "failed", data: err });
-        } else if (!data) {
+        // Use findByIdAndDelete with await
+        let data = await ProductsModel.findByIdAndDelete(id);
+
+        if (!data) {
+            // If no product is found
             res.status(404).json({ status: "failed", message: "Product not found" });
         } else {
+            // If product is successfully deleted
             res.status(200).json({ status: "success", message: "Product deleted successfully", data: data });
         }
-    });
+    } catch (err) {
+        // Handle errors
+        res.status(400).json({ status: "failed", data: err.message });
+    }
 };
+
 
 // Export all functions
 module.exports = { CreateProducts, ReadProducts, UpdateProducts, DeleteProducts };
