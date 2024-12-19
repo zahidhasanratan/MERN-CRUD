@@ -13,7 +13,8 @@ router.post("/CreateProduct",ProductsController.CreateProducts);
 
 
 //R=Read
-router.get("/ReadProduct",ProductsController.ReadProducts);
+router.get("/ReadProduct", ProductsController.ReadProducts);
+
 
 
 //U=Update
@@ -23,9 +24,9 @@ router.post("/UpdateProduct/:id",ProductsController.UpdateProducts);
 router.get("/DeleteProduct/:id",ProductsController.DeleteProducts);
 
 //Test
-router.get('/test', (req, res) => {
-    res.status(200).json({ message: 'Server is running and routes are accessible!' });
-});
+// router.get('/test', (req, res) => {
+//     res.status(200).json({ message: 'Server is running and routes are accessible!' });
+// });
 
 //API Routing End Point 
 

@@ -29,17 +29,9 @@ const limiter = rateLimit({
 });
 app.use(limiter); // Attach rate limiter to the app
 
-// Managing Frontend Routing
-app.use(express.static('client/build'));
-
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
-
 // MongoDB Database Connection
 const mongoose = require('mongoose');
 
-// MongoDB Database Connection
 const URI = "mongodb+srv://cruduser:cruduser@cluster0.44xkx.mongodb.net/CRUD"; // Replace with your actual credentials
 const OPTIONS = {
     autoIndex: true, // Keep this if you need automatic index creation
@@ -53,9 +45,15 @@ mongoose.connect(URI, OPTIONS)
         console.error("MongoDB Connection Failed:", error.message);
     });
 
-
 // Managing Backend API Routing
-app.use("/api/v1", router);
+app.use("/api/v1", router); // API routes will now be processed first
+
+// Managing Frontend Routing
+app.use(express.static('client/build'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 // Export the app instance
 module.exports = app;

@@ -48,27 +48,34 @@ const CreateProducts = async (req, res) => {
 
 
 // R = Read
-// const ReadProducts = (req, res) => {
-//     let Query = {};  // Empty query retrieves all products
-//     let Projection = "ProductName ProductCode Img unitPrice Qty TotalPrice";  // Fields to return
+const ReadProducts = async (req, res) => {
+    try {
+        // Empty query retrieves all products
+        let Query = {};  
+        // Fields to return
+        let Projection = "ProductName ProductCode Img unitPrice Qty TotalPrice";  
 
-//     ProductsModel.find(Query, Projection, (err, data) => {
+        // Use the `find()` method with Promises
+        let data = await ProductsModel.find(Query, Projection);
+
+        // Send success response
+        res.status(200).json({ status: "success", data: data });
+    } catch (err) {
+        // Send error response
+        res.status(400).json({ status: "failed", data: err.message });
+    }
+};
+
+
+// const ReadProducts = (req, res) => {
+//     ProductsModel.find({}, (err, data) => {
 //         if (err) {
-//             res.status(400).json({ status: "failed", data: err });
+//             res.status(500).json({ status: "failed", message: "Internal Server Error", error: err });
 //         } else {
 //             res.status(200).json({ status: "success", data: data });
 //         }
 //     });
 // };
-
-const ReadProducts = (req, res) => {
-    console.log("ReadProducts function invoked");
-    console.log("Request body:", req.body);
-
-    // Test response to confirm the function is working
-    res.status(200).json({ status: "success", message: "ReadProducts handler is working!" });
-};
-
 
 
 // U = Update
