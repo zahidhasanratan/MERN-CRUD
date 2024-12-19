@@ -15,6 +15,7 @@ router.post("/CreateProduct",ProductsController.CreateProducts);
 //R=Read
 router.get("/ReadProduct",ProductsController.ReadProducts);
 
+
 //U=Update
 router.post("/UpdateProduct/:id",ProductsController.UpdateProducts);
 
