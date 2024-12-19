@@ -1,16 +1,50 @@
 const ProductsModel = require('../model/ProductsModel');
 
 // C = Create
-const CreateProducts = (req, res) => {
-    let reqBody = req.body;
-    ProductsModel.create(reqBody, (err, data) => {
-        if (err) {
-            res.status(400).json({ status: "failed", data: err });
-        } else {
-            res.status(200).json({ status: "success", data: data });
+// const CreateProducts = (req, res) => {
+//     console.log("CreateProducts function invoked");
+//     console.log("Request body:", req.body);
+
+//     // Test response to confirm the function is working
+//     res.status(200).json({ status: "success", message: "CreateProducts handler is working!" });
+// };
+
+// const CreateProducts = (req, res) => {
+//     let reqBody = req.body;
+//     ProductsModel.create(reqBody, (err, data) => {
+//         if (err) {
+//             res.status(400).json({ status: "failed", data: err });
+//         } else {
+//             res.status(200).json({ status: "success", data: data });
+//         }
+//     });
+// };
+
+const CreateProducts = async (req, res) => {
+    try {
+        let reqBody = req.body;
+
+        // Check for missing fields (basic validation)
+        const { ProductName, ProductCode, Img, UnitPrice, Qty, TotalPrice } = reqBody;
+        if (!ProductName || !ProductCode || !Img || !UnitPrice || !Qty || !TotalPrice) {
+            return res.status(400).json({
+                status: "failed",
+                message: "All fields are required: ProductName, ProductCode, Img, UnitPrice, Qty, TotalPrice"
+            });
         }
-    });
+
+        // Create the product using the `create` method which now returns a Promise
+        const data = await ProductsModel.create(reqBody);
+
+        // Send the successful response
+        res.status(200).json({ status: "success", data: data });
+    } catch (err) {
+        console.error("Error creating product:", err);  // Log the error to the server console
+        res.status(400).json({ status: "failed", data: err.message });
+    }
 };
+
+
 
 // R = Read
 const ReadProducts = (req, res) => {
